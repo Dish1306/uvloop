@@ -70,9 +70,10 @@ matrix:
 
         - os: linux
           dist: xenial
+          arch: arm64
           language: python
           python: "3.8"
-          env: BUILD=tests
+          env: BUILD=tests,wheels,release
 
         - os: linux
           dist: trusty
