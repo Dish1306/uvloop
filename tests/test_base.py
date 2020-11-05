@@ -216,7 +216,7 @@ class _TestBase:
             started = int(round(self.loop.time() * 1000))
             self.loop.run_forever()
             finished = int(round(self.loop.time() * 1000))
-            self.assertGreaterEqual(finished - started, 69)
+            self.assertGreaterEqual(finished - started, 66)
 
     def test_call_at(self):
         if os.environ.get('TRAVIS_OS_NAME'):
