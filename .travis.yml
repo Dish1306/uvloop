@@ -73,15 +73,15 @@ matrix:
           arch: arm64
           language: python
           python: "3.8"
-          env: BUILD=tests,wheels,release
+          env: BUILD=tests,wheels
 
         - os: linux
           dist: trusty
-          branches: {only: [releases]}
+          arch: arm64
           language: python
           python: "3.5"
           services: [docker]
-          env: BUILD=tests,wheels,release
+          env: BUILD=tests,wheels
 
 cache:
     pip
