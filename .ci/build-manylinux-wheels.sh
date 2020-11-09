@@ -11,9 +11,16 @@ ${PIP} wheel /io/ -w /io/dist/
 
 # Bundle external shared libraries into the wheels.
 for whl in /io/dist/*.whl; do
-    auditwheel repair --plat="manylinux2014_${PYARCH}" \
-               $whl -w /io/dist/
-    rm /io/dist/*-linux_*.whl
+    if [ `uname -m` == 'aarch64' ] ; then
+     echo "inside aarch64"
+     auditwheel repair --plat="manylinux2014_${PYARCH}" \
+                $whl -w /io/dist/
+     rm /io/dist/*-linux_*.whl
+    else
+     auditwheel repair --plat="manylinux2010_${PYARCH}" \
+                $whl -w /io/dist/
+         rm /io/dist/*-linux_*.whl
+    fi
 done
 
 PYTHON="/opt/python/${PYTHON_VERSION}/bin/python"
