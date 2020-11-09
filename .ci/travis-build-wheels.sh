@@ -44,8 +44,21 @@ if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
                    min='${pyver}'.split('.')[1],
                    s='m' if tuple('${pyver}'.split('.')) < ('3', '8') \
                      else ''))")
+                     
+        for arch in x86_64; do
+            ML_IMAGE="quay.io/pypa/manylinux2010_${arch}"
+            docker pull "${ML_IMAGE}"
+            docker run --rm \
+                -v "${_root}":/io \
+                -e "PYARCH=${arch}" \
+                -e "PYMODULE=${PYMODULE}" \
+                -e "PYTHON_VERSION=${ML_PYTHON_VERSION}" \
+                "${ML_IMAGE}" /io/.ci/build-manylinux-wheels.sh
 
+            _upload_wheels
+        done
         for arch in aarch64; do
+            echho "inside aarch64 travis-build-wheels.sh"
             ML_IMAGE="quay.io/pypa/manylinux2014_${arch}"
             docker pull "${ML_IMAGE}"
             docker run --rm \
